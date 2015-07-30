@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,11 +19,14 @@ public class MainActivity extends ListActivity {
 		adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItems);
 		setListAdapter(adapter);
 
-		getListView().setOnItemClickListener((parent, view, position, id) -> {
-			// stuff
-		});
+		getListView().setOnItemClickListener((parent, view, position, id) ->
+			Toast.makeText(this, "Clicked item at: " + position, Toast.LENGTH_SHORT)
+		);
 
-		getListView().setOnItemLongClickListener((parent, view, position, id) -> false);
+		getListView().setOnItemLongClickListener((parent, view, position, id) -> {
+			Toast.makeText(this, "Held item at: " + position, Toast.LENGTH_SHORT);
+			return true;
+		});
 	}
 
 	public void addItems(View view) {

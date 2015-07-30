@@ -1,37 +1,29 @@
 package com.darkstar.alternity.act;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ArrayAdapter;
 
-public class MainActivity extends Activity {
+import java.util.ArrayList;
+
+public class MainActivity extends ListActivity {
+	ArrayList<String> listItems = new ArrayList<>();
+
+	ArrayAdapter<String> adapter;
+
+	int clickCounter = 0;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 		setContentView(R.layout.activity_main);
-
-		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout);
-		relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-				// Show ACT menu
-				return false;
-			}
-		});
+		adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItems);
+		setListAdapter(adapter);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return item.getItemId() == R.id.action_settings || super.onOptionsItemSelected(item);
+	public void addItems(View view) {
+		listItems.add("Clicked : " + clickCounter++);
+		adapter.notifyDataSetChanged();
 	}
 }
